@@ -1,14 +1,28 @@
 package com.Restful.Api.model;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "employee")
 public class Employee {
 
-    private long id ;
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private Long id ;
+
     private String firstName;
+
     private  String lastName;
+
     private  double salary;
+
     private  String address;
 
-    public Employee(long id, String firstName, String lastName, double salary, String address) {
+    public Employee() {
+    }
+
+    public Employee(Long id, String firstName, String lastName, double salary, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,7 +34,7 @@ public class Employee {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

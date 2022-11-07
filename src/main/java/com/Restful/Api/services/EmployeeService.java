@@ -1,70 +1,45 @@
 package com.Restful.Api.services;
 
-import java.util.List;
 import com.Restful.Api.model.Employee;
 import com.Restful.Api.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.data.jpa.domain.Specification;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 
+
+import java.util.List;
 
 @Service
-public class EmployeesService {
+public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
-
-    public List<Employee> findByCriteria(String employeeName){
-        return employeeRepository.findAll(new Specification<Employee>() {
-            public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates = new ArrayList<>();
-                if(employeeName!=null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("employeeName"), employeeName)));
-                }
-                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-            }
-        });
-    }
-
-
-    //	public List<Employee> getDeptEmps (long deptId){
-//
-//	return	employeeRepository.findByDepartmentId(deptId);
-//
-//	}
-//
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployee() {
 
         return employeeRepository.findAll();
     }
 
+    public Employee getEmployeeById(Long id) {
 
-//	public List<Employee> getEmpByFirstName(String firstName) {
-//
-//		return employeeRepository.findByfirstNameIgnoreCase(firstName);
-//	}
-//
-//	public List<Employee> getEmpSearch(String firstName, String lastName) {
-//
-//		return employeeRepository.empSearch(firstName, lastName);
-//	}
+        return employeeRepository.findById(id).orElseThrow(null);
+
+    }
+
+    public List<Employee> getEmpByFirstName(String firstName) {
+
+        return employeeRepository.findByFirstName(firstName);
+    }
+/*
+    public List<Employee>  getEmpSearch(String firstName,String lastName){
+
+        return employeeRepository.empSearch(firstName,lastName);
+    }
+*/
 
     public void addEmp(Employee newEmp) {
         employeeRepository.save(newEmp);
     }
 
-    public void aupdateEmp(Employee newEmp) {
-        employeeRepository.save(newEmp);
-    }
 
-    public void deleteEmp (long id) {
-
-        employeeRepository.deleteById(id);
-    }
 }
+
